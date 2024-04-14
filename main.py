@@ -5,7 +5,7 @@ from watchdog.events import FileSystemEventHandler, FileSystemEvent
 import os
 import time
 
-
+i = -1
 class Sort(FileSystemEventHandler):
     def on_modified(self, event):
         for filename in os.listdir(folger_unfiltered):
@@ -35,15 +35,24 @@ class Sort(FileSystemEventHandler):
                 os.rename(file, new_path)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+folger_unfiltered = 'C:/Users/Flyers3/Desktop/ls/sorttest/unfiltered'
 folger_images = 'C:/Users/Flyers3/Desktop/ls/sorttest/images'
 folger_video = 'C:/Users/Flyers3/Desktop/ls/sorttest/video'
 folger_audio = 'C:/Users/Flyers3/Desktop/ls/sorttest/audio'
-folger_doc = 'C:/Users/Flyers3/Desktop/ls/sorttest/audio'
-folger_unfiltered = ''
-folger_misc = ''
+folger_doc = 'C:/Users/Flyers3/Desktop/ls/sorttest/doc'
+folger_misc = 'C:/Users/Flyers3/Desktop/ls/sorttest/misc'
 #folger_images = f'{pathlib.Path().resolve()}'
 #folger_audio = f'{pathlib.Path().resolve()}'
 #folger_video = f'{pathlib.Path().resolve()}'
 #folger_doc = f'{pathlib.Path().resolve()}'
 #folger_misc = f'{pathlib.Path().resolve()}'
 #folger_unfiltered = BASE_DIR
+sort = Sort()
+observer = Observer()
+observer.schedule(sort, folger_unfiltered, recursive=True)
+observer.start()
+try:
+    while True:
+        time.sleep(10)
+except KeyboardInterrupt:
+    observer.stop()
