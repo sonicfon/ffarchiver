@@ -1,3 +1,5 @@
+import zipfile
+
 from watchdog.observers import Observer
 import pathlib
 from pathlib import Path
@@ -47,12 +49,36 @@ folger_misc = 'C:/Users/Flyers3/Desktop/ls/sorttest/misc'
 #folger_doc = f'{pathlib.Path().resolve()}'
 #folger_misc = f'{pathlib.Path().resolve()}'
 #folger_unfiltered = BASE_DIR
-sort = Sort()
-observer = Observer()
-observer.schedule(sort, folger_unfiltered, recursive=True)
-observer.start()
-try:
-    while True:
-        time.sleep(10)
-except KeyboardInterrupt:
-    observer.stop()
+print("1 - Отслеживание папки")
+print("2 - Архивирование папки")
+mode = int(input("Режим: "))
+if mode == 1:
+    sort = Sort()
+    observer = Observer()
+    observer.schedule(sort, folger_unfiltered, recursive=True)
+    observer.start()
+    try:
+        while True:
+            time.sleep(10)
+    except KeyboardInterrupt:
+        observer.stop()
+elif mode == 2:
+    name = str(input("Имя файла: "))
+    zip_file = zipfile.ZipFile(name + ".zip", "w")
+    print("Создание архива в " + f'{Path(__file__).resolve().parent.parent}')
+    for root, dirs, files in os.walk('sorttest'):
+            for file in files:
+                zip_file.write(os.path.join(root , file))
+    zip_file.close()
+    print("Архив готов")
+else:
+    print("Ошибка ввода режима.")
+    exit(0)
+print("Удалить файлы после архивации? 1-Да/любая цифра-Нет")
+delfile = int(input(":"))
+#if delfile == 1:
+   # for filename in os.listdir(folger_doc, folger_misc, folger_audio ,folger_video,folger_images,folger_unfiltered):
+    #    os.remove(folger_images,folger_unfiltered,folger_doc,folger_misc,folger_audio,folger_video)
+if delfile ==2:
+    print("Exit")
+    exit(0)
