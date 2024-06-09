@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ffarch.iml" filepath="$PROJECT_DIR$/ffarch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ffarchiver.iml" filepath="$PROJECT_DIR$/.idea/ffarchiver.iml" />
     </modules>
   </component>
 </project>
